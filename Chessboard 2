@@ -1,0 +1,56 @@
+import java.util.*;
+public class Main {
+    public static void main(String args[]) {
+        // Your Code Here
+		Scanner p=new Scanner(System.in);
+		int num=p.nextInt();
+		List<Integer> l=count_prime(num-1);
+		stair(l,num,"0 ",0,0);
+		System.out.println();
+		System.out.println(t);
+
+    }
+	static int t=0;
+	public static void stair(List<Integer> l,int n,String met,int cc,int pc){
+		if(cc>n){
+			return;
+		}
+		if(cc ==n-1){
+			t++;
+			System.out.print(met+"END , ");
+			return;
+		}
+		if(cc==n){
+			t++;
+			System.out.print(met.substring(0,met.length()-2)+ "END , ");
+			return;
+		}
+		if(pc<l.size()/2 && l.get(pc)==cc){
+			pc++;
+			stair(l,n,met+l.get(l.size()-pc)+" ",l.get(l.size()-pc),pc);
+			return;
+		}
+		for(int i=1;i<=6;i++){
+			stair(l,n,met+(cc+i)+" ",cc+i,pc);
+		}
+
+	}             
+	public static List<Integer> count_prime(int n){
+		boolean[] re=new boolean[n+1];
+		re[0]=re[1]=true;
+		for(int i=2;i*i<re.length;i++){
+			if(re[i]==false){
+				for(int k=2;k*i<=n;k++){
+					re[k*i]=true;
+				}
+			}
+		}            
+		List<Integer> l=new ArrayList<>();
+		for(int i=2;i<re.length;i++){
+			if(re[i]==false)
+			l.add(i);
+		}
+		return l;
+
+	}
+}
