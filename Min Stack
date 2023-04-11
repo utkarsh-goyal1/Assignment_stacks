@@ -1,0 +1,74 @@
+import java.util.*;
+
+public class Main {
+    public static void main (String args[]) {
+        Scanner sc=new Scanner(System.in);
+        MinStack obj=new MinStack();
+        int n=sc.nextInt();
+        String[]ans=new String[n];
+        for(int i=0;i<ans.length;i++)
+        {
+            ans[i]=sc.next();
+              
+        }
+        for(int i=0;i<ans.length;i++)
+        {
+            if(ans[i].equals("push"))
+            {
+                obj.push(sc.nextInt());
+            }
+            else if(ans[i].equals("getMin"))
+            {
+                System.out.print(obj.getMin()+" ");
+            }
+            else if(ans[i].equals("pop"))
+            {
+                obj.pop();
+            }
+            else if(ans[i].equals("top"))
+            {
+                System.out.print(obj.top()+" ");
+            }
+        }
+    }
+}
+class MinStack {
+    List<Integer>arr;
+    List<Integer>arr2;
+    int index=-1;
+    public MinStack() {
+        arr=new ArrayList<>();
+        arr2=new ArrayList<>();
+    }
+    
+    public void push(int val){
+        arr.add(val);
+        if(index>-1)
+        {
+            arr2.add(Math.min(val,arr2.get(index)));
+        }
+        else
+        {
+            arr2.add(val);
+        }
+        index++;
+    }
+    public void pop() {
+        arr.remove(arr.size()-1);
+        arr2.remove(arr2.size()-1);
+        index--;
+    }
+    
+    public int top() {
+        int x=arr.get(arr.size()-1);
+        return x;
+    }
+    
+    public int getMin() {
+        if(arr2.size()>-1)
+        {
+            return arr2.get(index);
+        }
+        return -1;
+    }
+}
