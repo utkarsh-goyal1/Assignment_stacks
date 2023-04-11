@@ -1,0 +1,66 @@
+import java.util.*;
+
+public class Main {
+    public static void main(String args[]) {
+        Scanner sc=new Scanner(System.in);
+        int n=sc.nextInt();
+        int q=sc.nextInt();
+        List<Integer>list=new ArrayList<>();
+        prime_sieve(list,n);
+        Stack<Integer>st1=new Stack<>();
+        Stack<Integer>st2=new Stack<>();
+        Stack<Integer>st3=new Stack<>();
+        for(int i=0;i<n;i++)
+        {
+            st1.push(sc.nextInt());
+        }
+        for(int i=1;i<=q;i++)
+        {
+            int prime=list.get(i-1);
+            while(!st1.isEmpty())
+            {
+                if(st1.peek()%prime==0)
+                {
+                    st3.push(st1.pop());
+                }
+                else
+                {
+                    st2.push(st1.pop());
+                }
+            }
+            while(!st3.isEmpty())
+            {
+                System.out.println(st3.pop());
+            }
+            st1=st2;
+            st2=new Stack<>();
+        }
+        while(!st1.isEmpty())
+        {
+            System.out.println(st1.pop());
+        }
+    }
+    public static void prime_sieve(List<Integer>list,int n)
+    {
+        boolean []A=new boolean[n+1];
+        A[0]=true;
+        A[1]=true;
+        for(int i=2;i<Math.sqrt(A.length);i++)
+        {
+            if(A[i]==false)
+            {
+                for(int j=2;j*i<A.length;j++)
+                {
+                    A[i*j]=true;
+                }
+            }
+        }
+        for(int i=0;i<A.length;i++)
+        {
+            if(A[i]==false)
+            {
+                list.add(i);
+            }
+        }
+    }
+}
